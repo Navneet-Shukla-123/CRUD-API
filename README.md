@@ -1,1 +1,1 @@
-#  Documneted using the swagger
+#  Documented using the swagger
