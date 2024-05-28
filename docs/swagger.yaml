@@ -1,0 +1,167 @@
+basePath: /
+definitions:
+  models.Pet:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      photo_urls:
+        items:
+          type: string
+        type: array
+      status:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: Pet API documentation
+  version: 1.0.0
+paths:
+  /create-pet:
+    post:
+      consumes:
+      - application/json
+      description: Create a new animal with the given information
+      parameters:
+      - description: Animal Info
+        in: body
+        name: animal
+        required: true
+        schema:
+          $ref: '#/definitions/models.Pet'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Animal inserted successfully
+          schema:
+            type: string
+        "400":
+          description: Some error occur. Please retry.
+          schema:
+            type: string
+      summary: Create a new animal
+  /pet/{id}:
+    delete:
+      description: Delete the pet by ID
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Pet deleted Successfully.
+          schema:
+            type: string
+        "400":
+          description: Some error occurred. Please retry.
+          schema:
+            type: string
+      summary: Delete pet by ID
+  /pet/fullupdate/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update the full data of the pet by ID
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Pet Data
+        in: body
+        name: pet
+        required: true
+        schema:
+          $ref: '#/definitions/models.Pet'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Pet updated successfully
+          schema:
+            type: string
+        "400":
+          description: Some error occurred. Please retry.
+          schema:
+            type: string
+      summary: Update full data of pet by ID
+  /pet/id/{id}:
+    get:
+      description: Get the pet by ID of the pet
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Pet'
+        "400":
+          description: Some error occurred. Please retry.
+          schema:
+            type: string
+      summary: Get pet by ID
+  /pet/partialupdate/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: Partially update the pet by ID
+      parameters:
+      - description: Pet ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Pet Data
+        in: body
+        name: pet
+        required: true
+        schema:
+          $ref: '#/definitions/models.Pet'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Partial updation successful
+          schema:
+            type: string
+        "400":
+          description: Some error occurred. Please retry.
+          schema:
+            type: string
+      summary: Partially update pet by ID
+  /pet/status/{status}:
+    get:
+      description: Get the pet by status of the pet
+      parameters:
+      - description: Pet Status
+        in: path
+        name: status
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Pet'
+            type: array
+        "400":
+          description: Some error occurred. Please retry.
+          schema:
+            type: string
+      summary: Get pet by status
+swagger: "2.0"

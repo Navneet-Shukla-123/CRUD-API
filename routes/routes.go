@@ -7,10 +7,20 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
 // CreateAnimal route for creating new animal
+
+// @Summary Create a new animal
+// @Description Create a new animal with the given information
+// @Accept  json
+// @Produce  json
+// @Param   animal  body    models.Pet  true  "Animal Info"
+// @Success 200 {string} string "Animal inserted successfully"
+// @Failure 400 {string} string "Some error occur. Please retry."
+// @Router /create-pet [post]
 func CreateAnimal(c *gin.Context) {
 	var data models.Pet
 	err := c.BindJSON(&data)
@@ -37,6 +47,13 @@ func CreateAnimal(c *gin.Context) {
 }
 
 // FindByID route for getting the pet for particular id
+
+// @Summary Get pet by ID
+// @Description Get the pet by ID of the pet
+// @Param   id  path    int  true  "Pet ID"
+// @Success 200 {object} models.Pet
+// @Failure 400 {string} string "Some error occurred. Please retry."
+// @Router /pet/id/{id} [get]
 func FindByID(c *gin.Context) {
 	id := c.Param("id")
 
@@ -57,6 +74,13 @@ func FindByID(c *gin.Context) {
 }
 
 // FindByStatus route to get pet by status
+
+// @Summary Get pet by status
+// @Description Get the pet by status of the pet
+// @Param   status  path    string  true  "Pet Status"
+// @Success 200 {array} models.Pet
+// @Failure 400 {string} string "Some error occurred. Please retry."
+// @Router /pet/status/{status} [get]
 func FindByStatus(c *gin.Context) {
 
 	status := c.Param("status")
@@ -87,6 +111,13 @@ func FindByStatus(c *gin.Context) {
 }
 
 // DeleteByID route will delete the Pet with given ID
+
+// @Summary Delete pet by ID
+// @Description Delete the pet by ID
+// @Param   id  path    int  true  "Pet ID"
+// @Success 200 {string} string "Pet deleted Successfully."
+// @Failure 400 {string} string "Some error occurred. Please retry."
+// @Router /pet/{id} [delete]
 func DeleteByID(c *gin.Context) {
 	id := c.Param("id")
 	newID, _ := strconv.Atoi(id)
@@ -122,6 +153,16 @@ func DeleteByID(c *gin.Context) {
 }
 
 // FullUpdate route will update the full data of the particular Pet
+
+// @Summary Update full data of pet by ID
+// @Description Update the full data of the pet by ID
+// @Accept  json
+// @Produce  json
+// @Param   id    path    int        true  "Pet ID"
+// @Param   pet   body    models.Pet true  "Pet Data"
+// @Success 200 {string} string "Pet updated successfully"
+// @Failure 400 {string} string "Some error occurred. Please retry."
+// @Router /pet/fullupdate/{id} [put]
 func FullUpdate(c *gin.Context) {
 	var data models.Pet
 
@@ -153,6 +194,15 @@ func FullUpdate(c *gin.Context) {
 }
 
 // PartialUpdate update the partial record of particular id
+// @Summary Partially update pet by ID
+// @Description Partially update the pet by ID
+// @Accept  json
+// @Produce  json
+// @Param   id    path    int        true  "Pet ID"
+// @Param   pet   body    models.Pet true  "Pet Data"
+// @Success 200 {string} string "Partial updation successful"
+// @Failure 400 {string} string "Some error occurred. Please retry."
+// @Router /pet/partialupdate/{id} [patch]
 func PartialUpdate(c *gin.Context) {
 	id := c.Param("id")
 
